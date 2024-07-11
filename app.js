@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const path = require('path');
+const { disconnect } = require('process');
 
 const socketio = require('socket.io');
 
@@ -21,6 +22,7 @@ io.on('connection', function (socket) {
     console.log("connected");
     socket.on('disconnect', function () {
         io.emit('remove-location', socket.id);
+        console.log("disconnect")
     });
     
 });
