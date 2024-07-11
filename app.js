@@ -1,4 +1,3 @@
-const exp = require('constants');
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -11,10 +10,14 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 app.set('view engine', 'ejs');
-app.set(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/", function (req, res){
-    res.send("This is going to be an awesome project!");
+io.on('connection', function (socket) {
+    console.log("connected");
 });
 
-server.listen(3000)
+app.get("/", function (req, res) {
+    res.render("index");
+});
+
+server.listen(3000, () => console.log('Server is running on port 3000'));
